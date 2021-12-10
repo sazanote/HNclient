@@ -27,7 +27,7 @@ function newsFeed() {
   const newsList = [];
   let template = `
     <div class="bg-gray-600 min-h-screen">
-      <div class="bg-white text-xl">
+      <div class="bg-white text-xl fixed top-0 left-0 right-0">
         <div class="mx-auto px-4">
           <div class="flex justify-between items-center py-6">
             <div class="flex justify-start">
@@ -44,7 +44,7 @@ function newsFeed() {
           </div> 
         </div>
       </div>
-      <div class="p-4 text-2xl text-gray-700">
+      <div class="p-4 pt-20 text-2xl text-gray-700">
         {{__news_feed__}}        
       </div>
     </div>
@@ -88,7 +88,7 @@ function newsDetail() {
   const newsContent = getData(CONTENT_URL.replace('@id', id))
   let template = `
     <div class="bg-gray-600 min-h-screen pb-8">
-      <div class="bg-white text-xl">
+      <div class="bg-white text-xl fixed top-0 left-0 right-0">
         <div class="mx-auto px-4">
           <div class="flex justify-between items-center py-6">
             <div class="flex justify-start">
@@ -102,15 +102,28 @@ function newsDetail() {
           </div>
         </div>
       </div>
+      <div class="pt-20">
+        <div class="h-full border rounded-xl bg-white m-6 p-6">
+          <h2 class="mb-4 text-xl font-bold">${newsContent.title}</h2>
+          <div class="flex justify-start mb-4 text-sm text-gray-500 ">
+            <div class="mr-4"><i class="fas fa-user mr-1"></i>${newsContent.user}</div>
+            <div class="mr-4"><i class="fas fa-heart mr-1"></i>${newsContent.points}</div>
+            <div class="mr-4"><i class="far fa-clock mr-1"></i>${newsContent.time_ago}</div>
+          </div>
+          <div class="text-gray-400 h-10">
+            <iframe type="html" src="${newsContent.url}" class="w-full border rounded-xl shadow-md overflow-hidden" height="500px">
+              This browser does not support iframe tag. 
+              Please click this <a href="${newsContent.url}" class="underline text-green-400">URL</a> to check the content.
+            </iframe>
+          </div>
+          
+          <div style="margin-top: 500px;">
+          <h3 class="text-l font-bold">Comments <span class="text-green-400">(${newsContent.comments_count})</span></h3>
 
-      <div class="h-full border rounded-xl bg-white m-6 p-6 ">
-        <h2 class="text-xl font-bold">${newsContent.title}</h2>
-        <div class="text-gray-400 min-h-content">
-          ${newsContent.content}
+            {{__comments__}}
+
+          </div>
         </div>
-
-        {{__comments__}}
-
       </div>
     </div>
   `;
@@ -127,7 +140,7 @@ function newsDetail() {
 
     for(let i = 0; i < comments.length; i++) {
       commentString.push(`
-        <div style="padding-left: ${called * 40}px;" class="mt-4">
+        <div style="padding-left: ${called * 40 + 20}px; padding-right: 20px;" class="pt-2 pb-2 bg-green-${(called) * 100}">
           <div class="text-gray-400">
             <i class="fa fa-sort-up mr-2"></i>
             <strong>${comments[i].user}</strong> ${comments[i].time_ago}
