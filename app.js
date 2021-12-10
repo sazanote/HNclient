@@ -17,15 +17,27 @@ function newsFeed() {
   const newsFeed = getData(NEWS_URL);
   const newsList = [];
   let template = `
-    <div>
-      <h1>Hacker News</h1>
-      <ul>
-        {{__news_feed__}}
-      </ul>
-    </div>
-    <div>
-      <a href="#/page/{{__prev_page__}}">이전 페이지</a>
-      <a href="#/show/{{__next_page__}}">다음 페이지</a>
+    <div class="bg-gray-600 min-h-screen">
+      <div class="bg-white text-xl">
+        <div class="mx-auto px-4">
+          <div class="flex justify-between items-center py-6">
+            <div class="flex justify-start">
+              <h1 class="font-extrabold">Hacker News</h1>
+            </div>
+            <div class="items-center justify-end">
+              <a href="#/page/{{__prev_page__}}" class="text-gray-500">
+                Previous
+              </a>
+              <a href="#/page/{{__next_page__}}" class="text-gray-500 ml-4">
+                Next
+              </a>
+            </div>
+          </div> 
+        </div>
+      </div>
+      <div class="p-4 text-2xl text-gray-700">
+        {{__news_feed__}}        
+      </div>
     </div>
   `;
 
@@ -40,8 +52,8 @@ function newsFeed() {
   }
   
   template = template.replace('{{__news_feed__}}', newsList.join(''));
-  template = template.replace('{{__prev__page__}}', (store.currentPage > 1) ? (store.currentPage - 1) : 1);
-  template = template.replace('{{__next__page__}}', (store.currentPage < 3) ? (store.currentPage + 1) : 3);
+  template = template.replace('{{__prev_page__}}', (store.currentPage > 1) ? (store.currentPage - 1) : 1);
+  template = template.replace('{{__next_page__}}', (store.currentPage < 3) ? (store.currentPage + 1) : 3);
   
   container.innerHTML = template;
 }
